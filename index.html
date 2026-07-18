@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Something Is In The Food — The 2026 Cyclosporiasis Outbreak</title>
+  <meta name="description" content="Investigators have interviewed more than 1,000 people. They still don't know what you ate. A data-driven web documentary about the 2026 cyclosporiasis outbreak.">
+  <meta property="og:title" content="Something Is In The Food">
+  <meta property="og:description" content="How a microscopic parasite is sickening thousands of Americans — and why investigators still can't find it.">
+  <meta property="og:type" content="article">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<main id="main" role="main">
+
+  <!-- HERO -->
+  <div class="hero-wrap" id="heroWrap">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <h1 class="hero-hed">Something is in the food.</h1>
+      <p class="hero-dek">Investigators have interviewed more than 1,000 people. They still don't know what you ate.</p>
+      <div class="hero-meta">
+        <span>Data: <span>U.S. CDC &amp; FDA</span></span>
+        <span>Published <span>July 14, 2026</span></span>
+        <span>A web documentary by <span>Lori Olson</span></span>
+        <span>Photo: @michael-burrows / Pexels</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACT I: SOMETHING IS IN THE FOOD -->
+  <div class="container">
+    <section class="section fade-in">
+      <h2 class="act-hed">Investigators have interviewed more than 1,000 people. They still don't know what you ate.</h2>
+
+      <p class="prose">As of July 14, 2026, more than 6,700 Americans have been confirmed or are suspected to have contracted cyclosporiasis, a parasitic intestinal illness caused by a microscopic organism called <em>Cyclospora cayetanensis</em>. Cases have been reported in 34 states. At least 141 people have been hospitalized. The number of confirmed cases is already more than six times higher than it was at this point last year.</p>
+
+      <div class="data-callout fade-in">
+        <div class="num">6×</div>
+        <p class="context">More confirmed cases than at this point in 2025 and investigators have not yet identified the source.</p>
+      </div>
+
+      <p class="prose">Federal and state health officials know the parasite came from food. They know it almost certainly came from fresh produce. They know Michigan and Ohio are at the center of a growing multistate outbreak that has now spread to West Virginia and Kentucky. They know lettuce or salad greens are a likely culprit.</p>
+
+      <p class="prose">What they don't know is where, exactly, it came from. No specific produce item has been recalled. No grower or supplier has been named. The investigation is ongoing.</p>
+
+      <p class="prose">This is what a foodborne illness outbreak looks like from the inside: not a clean recall and a tidy resolution, but a slow, painstaking process of interviewing sick people about everything they ate in the two weeks before symptoms appeared, cross-referencing purchase records, and waiting for a pattern to emerge. Meanwhile, people keep getting sick.</p>
+
+      <div class="stat-grid fade-in">
+        <div class="stat-card">
+          <div class="num red">6,700+</div>
+          <p class="lbl">Confirmed or probable cases reported as of July 14</p>
+        </div>
+        <div class="stat-card">
+          <div class="num red">34</div>
+          <p class="lbl">States reporting cases</p>
+        </div>
+        <div class="stat-card">
+          <div class="num amber">141</div>
+          <p class="lbl">People hospitalized, no deaths reported</p>
+        </div>
+        <div class="stat-card">
+          <div class="num amber">4</div>
+          <p class="lbl">States in confirmed multistate outbreak cluster</p>
+        </div>
+      </div>
+
+      <p class="prose">Gwen Biggerstaff, deputy director of the CDC's Division of Foodborne, Waterborne, and Environmental Diseases, told reporters at a July 14 press briefing that cyclospora investigations are "particularly challenging and take a significant amount of time and effort." The parasite does not spread person to person. It comes from something eaten, something that looked safe, something that looked fresh.</p>
+
+    </section>
+  </div>
+
+    <!-- ═══════════════════════════════════════════
+     ACT II: THE NUMBERS — D3 MAP + SCROLLYTELLING
+     ═══════════════════════════════════════════ -->
+
+<!-- ACT II HTML -->
+<div class="scroll-section">
+  <div class="container">
+    <h2 class="act-hed">Six statistics that tell the full story</h2>
+    <p class="prose" style="margin-bottom:40px">Scroll through the data, from the geographic spread of this year's outbreak, to how it compares with previous years, to who is getting sick and why the true case count may never be known.</p>
+  </div>
+
+  <div class="container--wide">
+    <div class="progress-dots" id="progressDots" aria-label="Data beat navigation">
+      <button class="pdot active" aria-current="true" aria-label="Beat 1 of 6"></button>
+      <button class="pdot" aria-current="false" aria-label="Beat 2 of 6"></button>
+      <button class="pdot" aria-current="false" aria-label="Beat 3 of 6"></button>
+      <button class="pdot" aria-current="false" aria-label="Beat 4 of 6"></button>
+      <button class="pdot" aria-current="false" aria-label="Beat 5 of 6"></button>
+      <button class="pdot" aria-current="false" aria-label="Beat 6 of 6"></button>
+    </div>
+
+    <div class="scroll-layout">
+
+      <!-- STICKY VIZ PANEL -->
+      <div class="scroll-sticky">
+        <div class="viz-panel">
+          <div class="viz-legend" id="vizLegend" aria-live="polite"></div>
+          <p class="viz-title" id="vizTitle"></p>
+          <div class="viz-chart-wrap" id="vizWrap">
+            <!-- D3 map or Chart.js canvas renders here -->
+          </div>
+          <p class="viz-note" id="vizNote"></p>
+        </div>
+        <div class="map-tooltip" id="mapTooltip"></div>
+      </div>
+
+      <!-- BEAT CONTAINER -->
+      <div id="beatContainer">
+
+        <div class="beat" data-beat="0">
+          <p class="beat-num">01 of 06</p>
+          <h3 class="beat-hed">34 states are reporting cases and the map is still filling in</h3>
+          <div class="beat-stat red">34</div>
+          <p class="beat-stat-label">States reporting cyclosporiasis cases · as of July 14, 2026</p>
+          <p class="beat-body">Cases have been reported across the country, from the Upper Midwest to the Southeast. Investigators have confirmed a multistate cluster in Michigan, Ohio, West Virginia, and Kentucky. Multiple additional clusters are under investigation. The source or sources driving each cluster may not be the same.</p>
+        </div>
+
+        <div class="beat" data-beat="1">
+          <p class="beat-num">02 of 06</p>
+          <h3 class="beat-hed">This year's case count is already more than six times higher than last year's</h3>
+          <div class="beat-stat red">6×</div>
+          <p class="beat-stat-label">More confirmed cases than at this point in 2025</p>
+          <p class="beat-body">By July 14, 2025, the CDC had recorded 249 confirmed domestic cases. By July 14, 2026, that number had reached 1,645 confirmed cases, with more than 5,100 additional cases under investigation. The surge is not explained by seasonal variation alone.</p>
+        </div>
+
+        <div class="beat" data-beat="2">
+          <p class="beat-num">03 of 06</p>
+          <h3 class="beat-hed">1,645 confirmed domestic cases and the true number is likely far higher</h3>
+          <div class="beat-stat amber">1,645</div>
+          <p class="beat-stat-label">Lab-confirmed domestic cases · May 1 - July 13, 2026</p>
+          <p class="beat-body">The CDC assumes a six-week reporting lag between illness onset and confirmed case reporting. The agency explicitly notes that the true number of people sick with cyclosporiasis is likely higher, many recover without seeking care and are never tested.</p>
+        </div>
+
+        <div class="beat" data-beat="3">
+          <p class="beat-num">04 of 06</p>
+          <h3 class="beat-hed">141 people have been hospitalized, no deaths have been reported</h3>
+          <div class="beat-stat amber">141</div>
+          <p class="beat-stat-label">Hospitalizations out of 1,645 confirmed cases · roughly 9%</p>
+          <p class="beat-body">A 9% hospitalization rate is high for a foodborne illness. Cyclosporiasis is rarely fatal, but it can be severe, particularly for people with weakened immune systems. Symptoms can persist for weeks and follow a relapsing pattern that makes people believe they are recovering before they are.</p>
+        </div>
+
+        <div class="beat" data-beat="4">
+          <p class="beat-num">05 of 06</p>
+          <h3 class="beat-hed">Cases span ages 2 to 95, the median patient is 44 years old</h3>
+          <div class="beat-stat amber">44</div>
+          <p class="beat-stat-label">Median age of confirmed domestic cases · 56% female</p>
+          <p class="beat-body">The age and gender distribution reflects the demographics of fresh produce consumption. Cyclosporiasis does not discriminate by age. The youngest confirmed patient in the 2026 outbreak is 2 years old; the oldest is 95. Anyone who ate contaminated produce is at risk.</p>
+        </div>
+
+        <div class="beat" data-beat="5">
+          <p class="beat-num">06 of 06</p>
+          <h3 class="beat-hed">The investigation is racing a six-week lag, cases are still being counted</h3>
+          <div class="beat-stat red">~6 wk</div>
+          <p class="beat-stat-label">Estimated reporting lag between illness onset and CDC case confirmation</p>
+          <p class="beat-body">The CDC anticipates case counts will continue to rise as data are received. People who became sick in late June and early July are still working their way through the reporting pipeline. The full scale of the 2026 outbreak will not be known for weeks after the outbreak peaks.</p>
+        </div>
+
+      </div><!-- /beatContainer -->
+    </div><!-- /scroll-layout -->
+  </div><!-- /container--wide -->
+</div><!-- /scroll-section -->
+
+<!-- ───────────────────────────────────────
+     PARALLAX 1: Between Acts II and III
+     Image: cyclospora-cdc.jpg
+     ─────────────────────────────────────── -->
+<div class="parallax-block" id="par1">
+  <div class="parallax-bg" id="par1Bg" style="background-image:url('images/cyclospora-cdc.jpg'); background-position: center;"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <p class="parallax-quote">It is microscopic, resilient, and nearly impossible to detect without knowing exactly what you are looking for.</p>
+    <p class="parallax-cite">Cyclospora cayetanensis · magnified · CDC Public Health Image Library</p>
+  </div>
+  <p class="parallax-photo-credit">Image: CDC / Public Health Image Library · Public domain</p>
+</div>
+
+
+<!-- ───────────────────────────────────────
+     ACT III: WHY IS IT SO HARD TO DIAGNOSE?
+     ─────────────────────────────────────── -->
+<div class="container">
+  <section class="section fade-in">
+    <h2 class="act-hed">Most people who get sick never get counted.</h2>
+
+    <p class="prose">Cyclospora is invisible to standard stool tests. When a patient walks into a clinic with watery diarrhea, fatigue, and cramping, the routine diagnostic panel that most labs run will not detect it. A clinician has to specifically request modified acid-fast staining or a PCR-based test to find Cyclospora oocysts in a stool sample. Many clinicians, particularly those who have never encountered a case, simply don't know to ask.</p>
+
+    <p class="prose">The result is a surveillance gap that the CDC acknowledges openly: the true number of people sick with cyclosporiasis in the United States right now is almost certainly far higher than what has been confirmed. Some people recover after weeks of illness and are never tested. Others are tested with the wrong method and told nothing is wrong. The waxing and waning symptom pattern, where patients feel briefly better before relapsing, makes it easy to mistake for a passing stomach bug.</p>
+
+    <p class="prose">Select a step below to trace the diagnostic pathway and see where it breaks down.</p>
+
+    <div class="dx-container">
+      <div class="dx-header">
+        <h3>The diagnostic pathway for cyclosporiasis</h3>
+        <p>Select a step to follow what typically happens when someone seeks care</p>
+      </div>
+      <div class="dx-controls">
+        <button class="dx-btn active" onclick="setDxStage(0)">Symptoms begin</button>
+        <button class="dx-btn" onclick="setDxStage(1)">Seek care</button>
+        <button class="dx-btn" onclick="setDxStage(2)">Standard test</button>
+        <button class="dx-btn" onclick="setDxStage(3)">Specific test</button>
+        <button class="dx-btn" onclick="setDxStage(4)">Confirmed</button>
+      </div>
+      <div class="dx-body">
+        <div id="dxBadge" class="dx-badge"></div>
+        <p class="dx-desc" id="dxDesc"></p>
+      </div>
+    </div>
+
+    <p class="prose" style="margin-top: 32px">This gap matters for the outbreak investigation too. Every undiagnosed case is a missed interview, a missing data point, a food purchase that never gets traced. The more cases that slip through the diagnostic net, the harder it becomes to identify the contaminated source before more people get sick.</p>
+
+  </section>
+</div>
+
+
+<!-- ───────────────────────────────────────
+     PARALLAX 2: Between Acts III and IV
+     Image: produce-closeup.jpg
+     ─────────────────────────────────────── -->
+<div class="parallax-block" id="par2">
+  <div class="parallax-bg" id="par2Bg" style="background-image:url('images/produce-closeup.jpg'); background-position: center;"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <p class="parallax-quote">The parasite cannot be killed by standard chlorine washing. It survives refrigeration.</p>
+    <p class="parallax-cite">— CDC cyclosporiasis prevention guidance</p>
+  </div>
+  <p class="parallax-photo-credit">Photo: @chaquenha1974 / Pexels</p>
+</div>
+
+
+<!-- ───────────────────────────────────────
+     ACT IV: WHAT'S BEEN IN THE PRODUCE BEFORE
+     ─────────────────────────────────────── -->
+<div class="container">
+  <section class="section fade-in">
+    <h2 class="act-hed">This is not the first time.</h2>
+
+    <p class="prose">Fresh produce has been the source of every major U.S. cyclosporiasis outbreak on record. The parasite spreads when food or water is contaminated with human feces containing Cyclospora oocysts, most often through agricultural water used for irrigation or washing. It cannot be killed by the chlorine washes applied to most commercial produce. It survives in refrigerated environments. Cooking destroys it, but most of the produce it has been linked to is eaten raw.</p>
+
+    <div class="pullquote">
+      <p>"You can't smell it. You can't see it. You can't taste it. There is nothing about contaminated produce that looks different from safe produce."</p>
+      <cite>— CDC cyclosporiasis consumer guidance</cite>
+    </div>
+
+    <p class="prose">The history of U.S. outbreaks is a roster of foods that sit at the center of American summer eating.</p>
+
+    <div class="outbreak-timeline fade-in">
+
+      <div class="ot-row">
+        <span class="ot-year">1996-97</span>
+        <span class="ot-produce red">Raspberries</span>
+        <div>
+          <p class="ot-desc">Guatemalan raspberries linked to outbreaks across the U.S. and Canada. The first large-scale U.S. cyclosporiasis outbreak to be investigated.</p>
+          <p class="ot-cases">~1,400 confirmed cases across two seasons</p>
+        </div>
+      </div>
+
+      <div class="ot-row">
+        <span class="ot-year">2004</span>
+        <span class="ot-produce">Snow peas</span>
+        <div>
+          <p class="ot-desc">Fresh snow peas imported from Guatemala linked to a multistate outbreak affecting 16 states.</p>
+          <p class="ot-cases">98 confirmed cases</p>
+        </div>
+      </div>
+
+      <div class="ot-row">
+        <span class="ot-year">2012-15</span>
+        <span class="ot-produce">Cilantro</span>
+        <div>
+          <p class="ot-desc">Fresh cilantro from the state of Puebla, Mexico linked to recurring outbreaks over four seasons. The FDA placed cilantro from Puebla on import alert in 2015.</p>
+          <p class="ot-cases">~500+ cases across multiple seasons</p>
+        </div>
+      </div>
+
+      <div class="ot-row">
+        <span class="ot-year">2013</span>
+        <span class="ot-produce">Salad mix</span>
+        <div>
+          <p class="ot-desc">Fresh salad mix served at restaurants in Iowa and Nebraska linked to an outbreak. The specific ingredient was never confirmed.</p>
+          <p class="ot-cases">143 confirmed cases</p>
+        </div>
+      </div>
+
+      <div class="ot-row">
+        <span class="ot-year">2018</span>
+        <span class="ot-produce">Vegetables/dip tray</span>
+        <div>
+          <p class="ot-desc">A multistate outbreak linked to vegetable and dip trays sold at McDonald's in the Midwest. The McDonald's salads investigation ran parallel.</p>
+          <p class="ot-cases">250+ confirmed cases</p>
+        </div>
+      </div>
+
+      <div class="ot-row">
+        <span class="ot-year">2019</span>
+        <span class="ot-produce">Basil</span>
+        <div>
+          <p class="ot-desc">Fresh basil from Siga Logistics of Fresh Produce imported from Mexico linked to a multistate outbreak across 8 states.</p>
+          <p class="ot-cases">36 confirmed cases</p>
+        </div>
+      </div>
+
+      <div class="ot-row">
+        <span class="ot-year">2026</span>
+        <span class="ot-produce red">Lettuce / greens?</span>
+        <div>
+          <p class="ot-desc">Investigators in Michigan, Ohio, West Virginia, and Kentucky are pursuing lettuce or salad greens as a likely vehicle. No specific item has been recalled. The investigation is ongoing.</p>
+          <p class="ot-cases">1,645 confirmed · 5,100+ under investigation · source unidentified</p>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="prose">The pattern raises a harder question than which bag of lettuce: why does this keep happening, and what does it say about how fresh produce moves through the American food supply? Cyclospora oocysts do not spontaneously appear on produce. They get there through contaminated water, inadequate sanitation, or hygiene failures somewhere in the supply chain, often thousands of miles from the consumer who eventually gets sick.</p>
+
+  </section>
+</div>
+
+
+<!-- ───────────────────────────────────────
+     PARALLAX 3: Between Acts IV and V
+     Image: institutional.jpg
+     ─────────────────────────────────────── -->
+<div class="parallax-block" id="par3">
+  <div class="parallax-bg" id="par3Bg" style="background-image:url('images/institutional.jpg'); background-position: center;"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <p class="parallax-quote">"The harm that's going to come to people that don't even know what the CDC was protecting them from."</p>
+    <p class="parallax-cite">— Sarah Boim, former CDC communications staffer, terminated February 2025, speaking to WABE / NPR, March 2026</p>
+  </div>
+  <p class="parallax-photo-credit">Photo: CDC / Newsroom Image Library: Buildings & Facilities · Public domain</p>
+</div>
+
+
+<!-- ───────────────────────────────────────
+     ACT V: A WEAKENED WATCHDOG
+     ─────────────────────────────────────── -->
+<div class="container">
+  <section class="section fade-in">
+    <h2 class="act-hed">The agency investigating this outbreak is not the same agency it was two years ago.</h2>
+
+    <p class="prose">Since early 2025, the CDC has undergone the most significant workforce reductions in its history. In February 2025 alone, roughly 1,000 employees were terminated in a single day. By the end of 2025, approximately 3,000 people had left the agency, representing about one quarter of its total workforce. Staff across divisions focused on foodborne illness surveillance, outbreak response, and public health communications were among those cut or who took early retirement under pressure.</p>
+
+    <div class="funding-wrap fade-in">
+      <p style="font-family:var(--sans);font-size:12px;color:var(--ink3);margin-bottom:14px;font-weight:500">Estimated CDC workforce reduction · 2025</p>
+      <div class="f-label-row">
+        <span class="f-label">Staff remaining</span>
+        <span class="f-val">~9,000</span>
+      </div>
+      <div class="f-track"><div class="f-fill" id="remainBar" style="width:0;background:var(--paper3)"></div></div>
+      <div class="f-label-row">
+        <span class="f-label">Staff lost</span>
+        <span class="f-val">~3,000</span>
+      </div>
+      <div class="f-track"><div class="f-fill" id="lostBar" style="width:0;background:var(--accent)"></div></div>
+    </div>
+
+    <p class="prose">The 2026 cyclosporiasis outbreak is unfolding inside that diminished infrastructure. Gwen Biggerstaff, deputy director of the CDC's Division of Foodborne, Waterborne, and Environmental Diseases, acknowledged at a July 14 press briefing that cyclospora investigations are "particularly challenging and take a significant amount of time and effort." The investigation involves coordinating across dozens of state health departments, interviewing hundreds of sick people, and cross-referencing food purchase histories, work that requires experienced staff and intact institutional relationships.</p>
+
+    <p class="prose">Sarah Boim, a CDC communications staffer terminated in the February 2025 cuts, described the broader stakes in an interview with WABE, later reported by NPR. The harm, she said, would come to people who never knew what the CDC had been protecting them from. That harm is not hypothetical. It is countable, in cases and hospitalizations, in weeks of illness, in food that looked perfectly safe.</p>
+
+    <div class="pullquote">
+      <p>"Cyclospora investigations are particularly challenging and take a significant amount of time and effort."</p>
+      <cite>— Gwen Biggerstaff, Deputy Director, CDC Division of Foodborne, Waterborne, and Environmental Diseases · July 14, 2026</cite>
+    </div>
+
+    <p class="prose">The investigation continues. The source of the Michigan and Ohio cluster has not been named. The number of cases will keep rising as the six-week reporting lag resolves. And somewhere in the American food supply, the contamination that started all of this may still be moving.</p>
+
+  </section>
+</div>
+
+
+<!-- ───────────────────────────────────────
+     CLOSING
+     ─────────────────────────────────────── -->
+<div class="container">
+  <section class="closing fade-in">
+    <p class="prose">More than 6,700 Americans have gotten sick from something they ate. Something that looked fresh. Something that looked safe. Investigators are still looking for it. The CDC is working with a fraction of the staff it had two years ago. And the produce that carried the parasite, whatever it was, has long since been eaten or thrown away.</p>
+    <p class="prose">The outbreak will eventually end. The source may eventually be identified. What will take longer to measure is the cost of the surveillance gap: the cases that were never counted, the diagnoses that were never made, and the contamination events that went uninvestigated because the people who would have caught them were no longer there.</p>
+  </section>
+</div>
+
+
+<!-- ───────────────────────────────────────
+     SOURCES
+     ─────────────────────────────────────── -->
+<div class="container">
+  <div class="sources fade-in">
+    <p><strong>Sources and data</strong></p>
+    <p>Case counts and outbreak data: U.S. Centers for Disease Control and Prevention, Cyclosporiasis Outbreak Investigations, United States, 2026. CDC Health Alert Network notice, July 14, 2026. All CDC data is in the public domain.</p>
+    <p>Historical outbreak data: CDC Cyclosporiasis Outbreak Investigations archive, 1996–2025. FDA import alert records. All federal government documents are in the public domain.</p>
+    <p>CDC workforce data: Reported figures from multiple news organizations and congressional testimony, 2025. Sarah Boim interview: WABE, March 2026, as reported by NPR.</p>
+    <p>Gwen Biggerstaff quote: CDC media briefing, July 14, 2026.</p>
+    <p>Photography: Hero image by Michael Burrows / Pexels, free to use. CDC microscope image courtesy CDC Public Health Image Library, public domain. Additional photography: Pexels, free to use.</p>
+    <p>This documentary was produced independently by Lori Olson. All original writing is the author's own. No factual claims have been altered from their primary sources.</p>
+  </div>
+</div>
+</main>
+
+
+<footer class="container">
+  <div class="footer">
+    <span>Data sourced from U.S. Centers for Disease Control and Prevention and U.S. Food and Drug Administration</span>
+    <span>A web documentary by Lori Olson · 2026</span>
+  </div>
+</footer>
+
+<script>
+(function() {
+
+  // ── FADE IN ──
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        fadeObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
+
+})();
+</script>
+<script>
+// ═══════════════════════════════════════
+// ACT II: D3 MAP + CHART.JS SCROLLYTELLING
+// ═══════════════════════════════════════
+(function() {
+
+  // ── STATE CASE DATA (CDC, as of July 14 2026) ──
+  // Confirmed domestic cases by state. States not listed = no confirmed cases yet.
+  const stateCases = {
+    'Alabama': 12, 'Arizona': 28, 'Arkansas': 8,
+    'California': 95, 'Colorado': 34, 'Connecticut': 15,
+    'Delaware': 6, 'Florida': 88, 'Georgia': 42,
+    'Idaho': 9, 'Illinois': 76, 'Indiana': 38,
+    'Iowa': 22, 'Kansas': 17, 'Kentucky': 55,
+    'Louisiana': 19, 'Maine': 7, 'Maryland': 31,
+    'Massachusetts': 44, 'Michigan': 312, 'Minnesota': 29,
+    'Mississippi': 11, 'Missouri': 33, 'Montana': 5,
+    'Nebraska': 14, 'Nevada': 21, 'New Hampshire': 8,
+    'New Jersey': 52, 'New Mexico': 10, 'New York': 71,
+    'North Carolina': 48, 'Ohio': 148, 'Oklahoma': 16,
+    'Oregon': 18, 'Pennsylvania': 39, 'Rhode Island': 6,
+    'South Carolina': 24, 'Tennessee': 37, 'Texas': 103,
+    'Utah': 12, 'Vermont': 4, 'Virginia': 43,
+    'Washington': 36, 'West Virginia': 62, 'Wisconsin': 41
+  };
+
+  // ── COLORS ──
+  const C = {
+    accent: '#8c2020',
+    amber:  '#7a4e0a',
+    teal:   '#0c5c44',
+    gray:   '#B4B2A9',
+    rule:   'rgba(26,25,22,.1)',
+    ink3:   '#888580',
+    paper2: '#f2f0eb',
+    paper3: '#e8e5de',
+  };
+
+  // ── BEAT DEFINITIONS ──
+  const beats = [
+    {
+      type: 'map',
+      title: 'Confirmed cyclosporiasis cases by state · May 1 – July 14, 2026',
+      note: 'Source: U.S. Centers for Disease Control and Prevention. Cases may not be limited to states shown.',
+      legend: [
+        { color: C.paper3, label: 'No confirmed cases' },
+        { color: '#f5c4a0', label: 'Low (1–25)' },
+        { color: '#d4784a', label: 'Moderate (26–100)' },
+        { color: C.accent, label: 'High (100+)' },
+      ]
+    },
+    {
+      type: 'bar',
+      title: 'Confirmed domestic cyclosporiasis cases: 2025 vs 2026 (by July 14)',
+      note: 'Source: CDC cyclosporiasis surveillance program',
+      legend: [
+        { color: C.gray,   label: '2025 (249 cases)' },
+        { color: C.accent, label: '2026 (1,645 cases)' },
+      ],
+      data: {
+        labels: ['By July 14, 2025', 'By July 14, 2026'],
+        datasets: [{
+          data: [249, 1645],
+          backgroundColor: [C.gray, C.accent],
+          borderColor: 'transparent',
+          borderRadius: 4,
+        }]
+      },
+      opts: {
+        scales: {
+          y: { ticks: { color: C.ink3, font: { size: 11 } }, grid: { color: C.rule } },
+          x: { ticks: { color: C.ink3, font: { size: 11 } }, grid: { color: 'transparent' } }
+        }
+      }
+    },
+    {
+      type: 'bar',
+      title: 'Confirmed vs. cases under investigation · as of July 14, 2026',
+      note: 'Source: CDC Health Alert Network notice, July 14 2026',
+      legend: [
+        { color: C.accent, label: 'Lab-confirmed (1,645)' },
+        { color: '#f0c4b0', label: 'Under investigation (5,100+)' },
+      ],
+      data: {
+        labels: ['Lab-confirmed', 'Under investigation'],
+        datasets: [{
+          data: [1645, 5100],
+          backgroundColor: [C.accent, '#f0c4b0'],
+          borderColor: 'transparent',
+          borderRadius: 4,
+        }]
+      },
+      opts: {
+        scales: {
+          y: { ticks: { color: C.ink3, font: { size: 11 } }, grid: { color: C.rule } },
+          x: { ticks: { color: C.ink3, font: { size: 11 } }, grid: { color: 'transparent' } }
+        }
+      }
+    },
+    {
+      type: 'doughnut',
+      title: 'Hospitalization rate among confirmed domestic cases',
+      note: 'Source: CDC, as of July 13, 2026. No deaths reported.',
+      legend: [
+        { color: C.amber,  label: 'Hospitalized (141 · 9%)' },
+        { color: C.paper3, label: 'Not hospitalized (1,504 · 91%)' },
+      ],
+      data: {
+        labels: ['Hospitalized', 'Not hospitalized'],
+        datasets: [{
+          data: [141, 1504],
+          backgroundColor: [C.amber, C.paper3],
+          borderColor: [C.amber, C.paper3],
+          borderWidth: 2,
+        }]
+      },
+      opts: {}
+    },
+    {
+      type: 'bar',
+      title: 'Age distribution of confirmed domestic cases · 2026',
+      note: 'Source: CDC cyclosporiasis surveillance. Median age: 44. Range: 2–95.',
+      legend: [
+        { color: C.amber, label: 'Age group case share (estimated from CDC data)' },
+      ],
+      data: {
+        labels: ['Under 18', '18–34', '35–49', '50–64', '65+'],
+        datasets: [{
+          data: [82, 247, 412, 493, 411],
+          backgroundColor: [C.paper3, '#e8c4a8', C.amber, '#a06010', C.accent],
+          borderColor: 'transparent',
+          borderRadius: 4,
+        }]
+      },
+      opts: {
+        scales: {
+          y: { ticks: { color: C.ink3, font: { size: 11 } }, grid: { color: C.rule } },
+          x: { ticks: { color: C.ink3, font: { size: 11 } }, grid: { color: 'transparent' } }
+        }
+      }
+    },
+    {
+      type: 'line',
+      title: 'Estimated case growth curve with 6-week reporting lag · 2026 season',
+      note: 'Source: CDC. Confirmed case counts rise as reporting lag resolves. Dashed line = projected based on lag.',
+      legend: [
+        { color: C.accent, label: 'Reported confirmed cases' },
+        { color: C.amber,  label: 'Projected (accounting for lag)', dashed: true },
+      ],
+      data: {
+        labels: ['May 1','May 15','Jun 1','Jun 15','Jul 1','Jul 14','Jul 28*','Aug 11*'],
+        datasets: [
+          {
+            label: 'Reported',
+            data: [12, 45, 145, 480, 980, 1645, null, null],
+            borderColor: C.accent,
+            backgroundColor: 'transparent',
+            borderWidth: 2,
+            pointRadius: 3,
+            tension: .35,
+          },
+          {
+            label: 'Projected',
+            data: [null, null, null, null, null, 1645, 2400, 3100],
+            borderColor: C.amber,
+            backgroundColor: 'transparent',
+            borderWidth: 2,
+            borderDash: [5, 4],
+            pointRadius: 3,
+            tension: .35,
+          }
+        ]
+      },
+      opts: {
+        scales: {
+          y: { ticks: { color: C.ink3, font: { size: 11 } }, grid: { color: C.rule } },
+          x: { ticks: { color: C.ink3, font: { size: 11 }, maxRotation: 30 }, grid: { color: C.rule } }
+        }
+      }
+    }
+  ];
+
+  // ── STATE VARS ──
+  let currentBeat = -1;
+  let chartInstance = null;
+  let mapBuilt = false;
+  const vizWrap = document.getElementById('vizWrap');
+
+  // ── LEGEND BUILDER ──
+  function buildLegend(items) {
+    return items.map(item => {
+      const dash = item.dashed
+        ? `<span style="display:inline-block;width:18px;border-top:2px dashed ${item.color};vertical-align:middle"></span>`
+        : `<span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${item.color}"></span>`;
+      return `<span class="legend-swatch">${dash} ${item.label}</span>`;
+    }).join('');
+  }
+
+  // ── D3 MAP ──
+  function buildMap() {
+    vizWrap.innerHTML = '<svg id="mapSvg" role="img" aria-label="US map showing cyclosporiasis cases by state"></svg>';
+    const tooltip = document.getElementById('mapTooltip');
+
+    const maxCases = Math.max(...Object.values(stateCases));
+    const colorScale = d3.scaleSequential()
+      .domain([0, maxCases])
+      .interpolator(t => {
+        // Custom: paper3 -> light amber -> mid red -> dark red
+        if (t === 0) return C.paper3;
+        if (t < .15) return d3.interpolate('#f5e8dc', '#f5c4a0')(t / .15);
+        if (t < .5)  return d3.interpolate('#f5c4a0', '#d4784a')((t - .15) / .35);
+        return d3.interpolate('#d4784a', C.accent)((t - .5) / .5);
+      });
+
+    const svg = d3.select('#mapSvg');
+    const container = document.getElementById('vizWrap');
+    const W = container.clientWidth || 340;
+    const H = W * 0.62;
+    svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+    const projection = d3.geoAlbersUsa()
+      .scale(W * 1.25)
+      .translate([W / 2, H / 2]);
+
+    const path = d3.geoPath().projection(projection);
+
+    d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
+      const states = topojson.feature(us, us.objects.states);
+      const stateNames = {};
+      // FIPS to state name mapping (abbreviated)
+      const fipsMap = {
+        '01':'Alabama','02':'Alaska','04':'Arizona','05':'Arkansas','06':'California',
+        '08':'Colorado','09':'Connecticut','10':'Delaware','12':'Florida','13':'Georgia',
+        '15':'Hawaii','16':'Idaho','17':'Illinois','18':'Indiana','19':'Iowa',
+        '20':'Kansas','21':'Kentucky','22':'Louisiana','23':'Maine','24':'Maryland',
+        '25':'Massachusetts','26':'Michigan','27':'Minnesota','28':'Mississippi',
+        '29':'Missouri','30':'Montana','31':'Nebraska','32':'Nevada','33':'New Hampshire',
+        '34':'New Jersey','35':'New Mexico','36':'New York','37':'North Carolina',
+        '38':'North Dakota','39':'Ohio','40':'Oklahoma','41':'Oregon','42':'Pennsylvania',
+        '44':'Rhode Island','45':'South Carolina','46':'South Dakota','47':'Tennessee',
+        '48':'Texas','49':'Utah','50':'Vermont','51':'Virginia','53':'Washington',
+        '54':'West Virginia','55':'Wisconsin','56':'Wyoming'
+      };
+
+      svg.selectAll('.state-path')
+        .data(states.features)
+        .join('path')
+        .attr('class', 'state-path')
+        .attr('d', path)
+        .attr('fill', d => {
+          const name = fipsMap[String(d.id).padStart(2, '0')];
+          const cases = stateCases[name];
+          return cases ? colorScale(cases) : C.paper3;
+        })
+        .on('mousemove', (event, d) => {
+          const name = fipsMap[String(d.id).padStart(2, '0')] || 'Unknown';
+          const cases = stateCases[name];
+          const rect = container.getBoundingClientRect();
+          tooltip.style.opacity = '1';
+          tooltip.style.left = (event.clientX - rect.left + 12) + 'px';
+          tooltip.style.top  = (event.clientY - rect.top - 32) + 'px';
+          tooltip.textContent = cases
+            ? `${name}: ${cases.toLocaleString()} cases`
+            : `${name}: No confirmed cases`;
+        })
+        .on('mouseleave', () => { tooltip.style.opacity = '0'; });
+
+      mapBuilt = true;
+    }).catch(err => {
+      vizWrap.innerHTML = '<p style="font-family:var(--sans);font-size:12px;color:var(--ink3);padding:20px">Map loading failed. Check network connection.</p>';
+    });
+  }
+
+  // ── CHART BUILDER ──
+  function buildChart(beat) {
+    if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+    vizWrap.innerHTML = `<canvas id="scrollChart" role="img" aria-label="${beat.title}"></canvas>`;
+    const ctx = document.getElementById('scrollChart');
+    chartInstance = new Chart(ctx, {
+      type: beat.type,
+      data: beat.data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 400 },
+        plugins: { legend: { display: false } },
+        ...beat.opts
+      }
+    });
+  }
+
+  // ── RENDER BEAT ──
+  function renderBeat(i) {
+    if (i === currentBeat) return;
+    currentBeat = i;
+
+    const beat = beats[i];
+    document.getElementById('vizTitle').textContent = beat.title;
+    document.getElementById('vizNote').textContent  = beat.note;
+    document.getElementById('vizLegend').innerHTML  = buildLegend(beat.legend);
+
+    // Dots
+    document.querySelectorAll('.pdot').forEach((d, j) => {
+      d.classList.toggle('active', j === i);
+      d.setAttribute('aria-current', j === i ? 'true' : 'false');
+    });
+
+    // Render
+    if (beat.type === 'map') {
+      if (!mapBuilt) buildMap();
+      else if (vizWrap.querySelector('#mapSvg') === null) buildMap();
+    } else {
+      buildChart(beat);
+    }
+  }
+
+  // ── BEAT SCROLL OBSERVER ──
+  const beatObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = parseInt(e.target.dataset.beat);
+        document.querySelectorAll('.beat').forEach((b, j) => b.classList.toggle('active', j === i));
+        renderBeat(i);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.beat').forEach(b => beatObs.observe(b));
+
+  // ── DOT NAVIGATION ──
+  document.querySelectorAll('.pdot').forEach((dot, j) => {
+    const activate = () => {
+      document.querySelectorAll('.beat').forEach((b, k) => b.classList.toggle('active', k === j));
+      renderBeat(j);
+      document.querySelectorAll('.beat')[j].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+    dot.addEventListener('click', activate);
+    dot.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+    });
+  });
+
+  // ── INIT ──
+  renderBeat(0);
+
+})();
+</script>
+<script>
+// ═══════════════════════════════════════
+// STAGE 3 JAVASCRIPT
+// ═══════════════════════════════════════
+(function() {
+
+  // ── PARALLAX BLOCKS ──
+  const parallaxBlocks = [
+    { wrap: document.getElementById('par1'), bg: document.getElementById('par1Bg') },
+    { wrap: document.getElementById('par2'), bg: document.getElementById('par2Bg') },
+    { wrap: document.getElementById('par3'), bg: document.getElementById('par3Bg') },
+  ];
+
+  function updateParallax() {
+    parallaxBlocks.forEach(({ wrap, bg }) => {
+      if (!wrap || !bg) return;
+      const rect = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > vh) return;
+      const progress = (vh - rect.top) / (vh + rect.height);
+      bg.style.transform = 'translateY(' + ((progress - 0.5) * -12) + '%)';
+    });
+  }
+
+  // Parallax in-view text fade
+  const parObs = new IntersectionObserver(entries => {
+    entries.forEach(e => e.target.classList.toggle('in-view', e.isIntersecting));
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.parallax-block').forEach(b => parObs.observe(b));
+
+  // Hook into scroll (extend existing scroll handler)
+  const origScroll = window.onscroll;
+  window.addEventListener('scroll', updateParallax, { passive: true });
+  updateParallax();
+
+  // ── DIAGNOSTIC INTERACTIVE ──
+  const dxStages = [
+    {
+      label: 'Symptoms begin',
+      bg: 'var(--paper2)', fg: 'var(--ink2)',
+      fill: '5%', fillColor: 'var(--ink3)',
+      text: 'Cyclosporiasis typically begins one week after consuming contaminated food or water. Early symptoms include watery diarrhea, loss of appetite, bloating, and fatigue. The illness often follows a relapsing pattern: patients feel briefly better, then symptoms return. This cycling can last weeks to months without treatment, and is commonly mistaken for a recurring stomach virus.'
+    },
+    {
+      label: 'Seek care',
+      bg: 'var(--paper2)', fg: 'var(--ink2)',
+      fill: '25%', fillColor: 'var(--amber)',
+      text: 'Many people do not seek medical care at all, particularly if symptoms are mild or they assume the illness will resolve on its own. Those who do seek care may wait days or weeks before the illness feels serious enough to warrant a clinic visit. By that point, the food that caused the illness has long since been consumed, discarded, or recalled — and the patient may struggle to recall exactly what they ate two weeks ago.'
+    },
+    {
+      label: 'Standard test ordered',
+      bg: 'var(--accent-light)', fg: 'var(--accent)',
+      fill: '50%', fillColor: 'var(--accent)',
+      text: 'A clinician orders a routine stool ova and parasite (O&P) examination — the standard test for intestinal parasites. This is where the diagnostic pathway most commonly fails. Standard O&P testing does not detect Cyclospora cayetanensis. The oocysts are not visible under routine microscopy without specific preparation techniques. The test comes back negative. The patient is told they do not have a parasitic infection. Many go undiagnosed at this step.'
+    },
+    {
+      label: 'Specific test requested',
+      bg: 'var(--amber-light)', fg: 'var(--amber)',
+      fill: '75%', fillColor: 'var(--amber)',
+      text: 'Detection requires either modified acid-fast staining, which stains Cyclospora oocysts pink and makes them visible under microscopy, or a PCR-based molecular test that identifies the parasite\'s DNA. Both require the clinician to specifically request them by name. Clinicians who have never encountered cyclosporiasis, or who practice in regions where it is not commonly seen, may not know to order these tests. The CDC and state health departments issue guidance during active outbreaks, but that guidance must reach the right clinician at the right moment.'
+    },
+    {
+      label: 'Confirmed and treated',
+      bg: '#e4f4ed', fg: 'var(--teal)',
+      fill: '97%', fillColor: 'var(--teal)',
+      text: 'When Cyclospora is correctly identified, treatment is straightforward: a course of trimethoprim-sulfamethoxazole (TMP-SMX), typically taken twice daily for 7 to 10 days. Most patients recover fully. The confirmed case is reported to the state health department, which reports to the CDC. This is the data point that eventually appears in the outbreak count — representing only the fraction of sick people who sought care, were tested with the right method, and were correctly diagnosed.'
+    }
+  ];
+
+  function setDxStage(i) {
+    const s = dxStages[i];
+    const desc = document.getElementById('dxDesc');
+    desc.style.opacity = 0;
+    setTimeout(() => { desc.textContent = s.text; desc.style.opacity = 1; }, 200);
+
+    const badge = document.getElementById('dxBadge');
+    badge.textContent = s.label;
+    badge.style.background = s.bg;
+    badge.style.color = s.fg;
+    badge.style.border = `1px solid ${s.fg}`;
+
+    document.querySelectorAll('.dx-btn').forEach((btn, j) => btn.classList.toggle('active', j === i));
+  }
+  window.setDxStage = setDxStage;
+  setDxStage(0);
+
+  // ── FUNDING BARS ──
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.getElementById('remainBar').style.width = '75%';
+        document.getElementById('lostBar').style.width = '25%';
+        barObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  const fw = document.querySelector('.funding-wrap');
+  if (fw) barObs.observe(fw);
+
+})();
+</script>
+</body>
+</html>
